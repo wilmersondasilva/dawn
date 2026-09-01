@@ -10,3 +10,7 @@ Thumbs.db
 .shopify
 node_modules
 *.zip
+# Secrets (page-builder MCP server config) #
+.env
+.env.local
+.env.*.local

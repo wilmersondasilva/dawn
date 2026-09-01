@@ -1,0 +1,28 @@
+{
+  "name": "shopify-page-builder-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Remote MCP server (streamable HTTP) exposing safe, narrow tools for building Shopify pages via a staging theme and GitHub-synced promotion.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "check:shopify": "tsx scripts/smoke.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  }
+}
