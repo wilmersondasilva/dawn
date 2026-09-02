@@ -73,7 +73,12 @@ export class FakeGitHub {
     return sha;
   }
   async getCommit(sha: string) { const c = this.commits.get(sha)!; return { sha, parents: c.parents, message: c.message.replace(/^Merge: /, ''), files: c.changed }; }
-  async compare() { return { ahead_by: 0, behind_by: 0, files: [] }; }
+  async compare(base: string, head: string) {
+    const bt = this.treeOf(base); const ht = this.treeOf(head);
+    const files: string[] = [];
+    for (const k of new Set([...bt.keys(), ...ht.keys()])) if (bt.get(k) !== ht.get(k)) files.push(k);
+    return { ahead_by: 0, behind_by: 0, files };
+  }
   async listCommits(branch: string) {
     const out: Array<{ sha: string; message: string; date: string | null }> = [];
     let sha: string | undefined = this.branches.get(branch);

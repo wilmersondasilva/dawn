@@ -103,7 +103,9 @@ equivalents *publicar / colocar no ar*):
    mention "if you change your mind, tell me and I can undo this".
 
 ### 8. Cleanup and honesty
-If a draft is abandoned, offer `delete_template_staging`. If any tool fails mid-flow, say clearly what
+After a successful go-live the draft space is tidied automatically (`promote_to_live` reports it as
+`staging_cleanup`; it is skipped when other drafts are still in progress — that is fine). Only
+abandoned drafts that will never go live need `delete_template_staging`. If any tool fails mid-flow, say clearly what
 was done, what was not, and what the customer currently sees on the live site (usually: nothing changed).
 Never leave a half-done state unexplained.
 

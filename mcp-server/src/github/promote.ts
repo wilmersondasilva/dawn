@@ -21,6 +21,13 @@ export interface PromoterDeps {
   syncTimeoutMs?: number;
 }
 
+export interface StagingCleanup {
+  performed: boolean;
+  reason: string;
+  /** Files on staging that still differ from the live branch (unpromoted drafts). */
+  remaining_drafts: string[];
+}
+
 export interface PromoteResult {
   status: 'promoted' | 'nothing_to_promote';
   files: Array<{ filename: string; action: 'created' | 'updated' | 'unchanged' }>;
@@ -28,6 +35,8 @@ export interface PromoteResult {
   merge_commit_sha?: string;
   live_verified: boolean;
   unverified_files: string[];
+  /** Post-promotion tidy-up of the staging branch (only when no other drafts remain). */
+  staging_cleanup?: StagingCleanup;
   note: string;
 }
 
@@ -153,6 +162,12 @@ export class Promoter {
     this.logger.info('promoted', { files: changes.map((c) => c.path), pr: pr.number, mergeSha });
 
     const verify = await this.waitForMatch(expected, this.d.readLiveFile, this.syncTimeoutMs);
+    let staging_cleanup: StagingCleanup;
+    try {
+      staging_cleanup = await this.cleanupStagingAfterPromote();
+    } catch (e) {
+      staging_cleanup = { performed: false, reason: `cleanup skipped: ${(e as Error).message}`, remaining_drafts: [] };
+    }
     return {
       status: 'promoted',
       files,
@@ -160,10 +175,37 @@ export class Promoter {
       merge_commit_sha: mergeSha,
       live_verified: verify.synced,
       unverified_files: verify.pending,
+      staging_cleanup,
       note: verify.synced
         ? 'Merged to main and confirmed on the live theme.'
         : `Merged to main, but the live theme had not picked up ${verify.pending.join(', ')} after ${Math.round(this.syncTimeoutMs / 1000)}s. Shopify's GitHub sync is usually seconds; check the live page in a minute. If it never updates, check the theme's GitHub connection in Online Store → Themes.`,
     };
+  }
+
+  /**
+   * After a successful promotion, reset the staging branch onto the live
+   * branch — but ONLY if staging holds no other content that differs from
+   * live (i.e. no unpromoted drafts would be lost). Content is compared
+   * semantically, so sync-added comment headers don't block the tidy-up.
+   */
+  private async cleanupStagingAfterPromote(): Promise<StagingCleanup> {
+    const { gh, liveBranch, stagingBranch } = this.d;
+    const mainSha = await gh.getBranchSha(liveBranch);
+    const stagingSha = await gh.getBranchSha(stagingBranch);
+    if (stagingSha === mainSha) return { performed: false, reason: 'staging already matches the live branch', remaining_drafts: [] };
+    const cmp = await gh.compare(liveBranch, stagingBranch);
+    const remaining: string[] = [];
+    for (const f of cmp.files) {
+      const draft = (await gh.getFile(f, stagingBranch))?.content ?? null;
+      const live = (await gh.getFile(f, liveBranch))?.content ?? null;
+      if (!sameContent(draft, live)) remaining.push(f);
+    }
+    if (remaining.length) {
+      return { performed: false, reason: 'staging still holds other unpromoted drafts; left untouched so they are not lost', remaining_drafts: remaining };
+    }
+    await gh.updateBranch(stagingBranch, mainSha, true);
+    this.logger.info('staging cleaned after promote', { mainSha });
+    return { performed: true, reason: 'staging reset to match the live branch (no other drafts present)', remaining_drafts: [] };
   }
 
   /** Revert a promotion: restore every file touched by `mergeSha` to its state before that commit. */

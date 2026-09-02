@@ -52,6 +52,33 @@ describe('Promoter.promote — scoped promotion', () => {
     expect([...gh.branches.keys()].some((b) => b.startsWith('page-builder/'))).toBe(false); // temp branch cleaned up
     const merge = await gh.getCommit(r.merge_commit_sha!);
     expect(merge.message).toMatch(/^\[page-builder\] promote page\.sale\.json/);
+    // Staging still holds real drift (settings tweak + abandoned draft) → cleanup must NOT touch it.
+    expect(r.staging_cleanup?.performed).toBe(false);
+    expect(r.staging_cleanup?.remaining_drafts).toEqual(expect.arrayContaining(['config/settings_data.json', 'templates/page.abandoned.json']));
+    expect(gh.treeOf('staging').has('templates/page.abandoned.json')).toBe(true);
+  });
+
+  it('resets staging onto main after promoting when no other drafts remain', async () => {
+    const { gh, promoter, stagingTheme } = setup();
+    // Draft lives on the staging branch (as the sync would have committed it) and on the staging theme.
+    const sha = await gh.createCommit(gh.branches.get('staging')!, [{ path: TPL, content: draft }], 'draft');
+    gh.branches.set('staging', sha);
+    stagingTheme.set(TPL, draft);
+    const r = await promoter.promote([TPL]);
+    expect(r.status).toBe('promoted');
+    expect(r.staging_cleanup).toMatchObject({ performed: true, remaining_drafts: [] });
+    expect(gh.branches.get('staging')).toBe(gh.branches.get('main'));
+    expect(gh.treeOf('staging').get(TPL)).toBe(draft);
+  });
+
+  it('keeps staging when the only differences are comment headers (semantic compare)', async () => {
+    const { gh, promoter, stagingTheme } = setup();
+    const headered = '/*\n * auto-generated\n */\n' + draft;
+    const sha = await gh.createCommit(gh.branches.get('staging')!, [{ path: TPL, content: headered }], 'draft with header');
+    gh.branches.set('staging', sha);
+    stagingTheme.set(TPL, headered);
+    const r = await promoter.promote([TPL]);
+    expect(r.staging_cleanup?.performed).toBe(true);
   });
 
   it('reports updated vs unchanged and short-circuits when live already matches', async () => {
