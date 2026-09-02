@@ -1,0 +1,207 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "order": [
+    "main",
+    "hero",
+    "intro",
+    "products",
+    "highlights",
+    "newsletter"
+  ],
+  "sections": {
+    "hero": {
+      "type": "image-banner",
+      "blocks": {
+        "buttons": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop the collection",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Fall Collection",
+            "heading_size": "hxl"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "New arrivals for the season — layers, textures, and warmer tones.",
+            "text_style": "subtitle"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text",
+        "buttons"
+      ],
+      "settings": {
+        "image_overlay_opacity": 30,
+        "image_height": "large",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "highlights": {
+      "type": "multicolumn",
+      "blocks": {
+        "c1": {
+          "type": "column",
+          "settings": {
+            "title": "New materials",
+            "text": "<p>Heavier weights and softer hand-feel, chosen for the season.</p>"
+          }
+        },
+        "c2": {
+          "type": "column",
+          "settings": {
+            "title": "Made to layer",
+            "text": "<p>Pieces designed to work together as the temperature drops.</p>"
+          }
+        },
+        "c3": {
+          "type": "column",
+          "settings": {
+            "title": "Limited run",
+            "text": "<p>Small batches. When it's gone, it's gone.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "title": "What's new this season",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "columns_desktop": 3,
+        "column_alignment": "center",
+        "background_style": "primary",
+        "color_scheme": "scheme-2",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "intro": {
+      "type": "rich-text",
+      "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "Now available",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "small"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Our fall collection is here. Designed for cooler mornings and longer evenings, every piece is made to be worn on repeat.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "caption",
+        "text"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 24
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "f": {
+          "type": "email_form",
+          "settings": {}
+        },
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "Be first for the next drop",
+            "heading_size": "h1"
+          }
+        },
+        "p": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Early access, launch dates, and nothing else.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "h",
+        "p",
+        "f"
+      ],
+      "settings": {
+        "color_scheme": "scheme-4",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "products": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "all",
+        "products_to_show": 8,
+        "title": "Shop the collection",
+        "heading_size": "h1",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "show_secondary_image": true,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 24,
+        "padding_bottom": 36
+      }
+    }
+  }
+}
