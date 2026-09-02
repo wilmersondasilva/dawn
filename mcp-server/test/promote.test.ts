@@ -160,5 +160,7 @@ describe('sameContent', () => {
     expect(sameContent(null, null)).toBe(true);
     expect(sameContent(null, '{}')).toBe(false);
     expect(sameContent('x ', 'x')).toBe(true);
+    const header = '/*\n * IMPORTANT: auto-generated\n */\n';
+    expect(sameContent(header + '{"a":1}', '{"a":1}')).toBe(true); // Shopify-written vs server-written copies
   });
 });

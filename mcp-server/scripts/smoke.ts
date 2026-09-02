@@ -23,7 +23,7 @@ async function main() {
   console.log(`Live theme: ${ctx.themeIds.live.name} (${ctx.themeIds.live.numericId})  Staging theme: ${ctx.themeIds.staging.name} (${ctx.themeIds.staging.numericId})`);
   console.log(`GitHub ${config.githubOwner}/${config.githubRepo}: ${config.liveBranch}=${(await ctx.gh.getBranchSha(config.liveBranch)).slice(0, 7)} ${config.stagingBranch}=${(await ctx.gh.getBranchSha(config.stagingBranch)).slice(0, 7)}`);
   const cat = await ctx.catalog.get(true);
-  console.log(`Catalog: ${cat.sections.length} sections (${cat.sections.filter((x) => x.usable_in_page_templates).length} usable on pages), ${cat.skipped.length} skipped, color schemes: ${cat.color_schemes.join(', ')}`);
+  console.log(`Catalog: ${cat.sections.length} sections (${cat.sections.filter((x) => x.usable_in_page_templates).length} usable on pages), ${cat.skipped.length} skipped, color schemes: ${cat.color_schemes.map((c) => c.id).join(', ')}`);
   if (process.argv.includes('--write-check')) {
     const filename = 'templates/page.page-builder-access-check.json';
     try {

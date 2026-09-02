@@ -30,7 +30,9 @@ describe('template validation', () => {
     expect(msgs(r)).toBe('');
     expect(r.ok).toBe(true);
     expect(r.summary.sections.map((s) => s.type)).toEqual(['main-page', 'contact-form']);
+    // index.json now carries Shopify's auto-generated /* */ header (written back by sync).
     const index = readFileSync(join(THEME_ROOT, 'templates', 'index.json'), 'utf8');
+    expect(index.trimStart().startsWith('/*')).toBe(true);
     const ri = v(index, 'templates/index.json');
     expect(msgs(ri)).toBe('');
     expect(ri.ok).toBe(true);

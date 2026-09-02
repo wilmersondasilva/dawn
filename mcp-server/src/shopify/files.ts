@@ -80,6 +80,15 @@ export class FileService {
     return { files: data.files.nodes.map(mapFile), hasNextPage: data.files.pageInfo.hasNextPage, endCursor: data.files.pageInfo.endCursor };
   }
 
+  /** Resolve a template reference (shopify://shop_images/<file>) back to the store file. */
+  async findByReference(reference: string): Promise<StoreFile | null> {
+    const m = /^shopify:\/\/(?:shop_images|files(?:\/videos)?)\/(.+)$/.exec(reference.trim());
+    if (!m) return null;
+    const name = m[1];
+    const { files } = await this.search({ term: name.replace(/\.[a-z0-9]+$/i, ''), first: 50 });
+    return files.find((f) => f.reference === reference) ?? files.find((f) => f.filename === name) ?? null;
+  }
+
   async getById(id: string): Promise<StoreFile | null> {
     const data = await this.gql.request<{ node: RawFile | null }>(/* GraphQL */ `query FileById($id: ID!) { node(id: $id) { ${FILE_FRAGMENT} } }`, { id });
     return data.node ? mapFile(data.node) : null;

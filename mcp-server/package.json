@@ -4,7 +4,9 @@
   "private": true,
   "description": "Remote MCP server (streamable HTTP) exposing safe, narrow tools for building Shopify pages via a staging theme and GitHub-synced promotion.",
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "main": "dist/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
@@ -17,6 +19,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
+    "sharp": "^0.35.4",
     "zod": "^3.25.0"
   },
   "devDependencies": {

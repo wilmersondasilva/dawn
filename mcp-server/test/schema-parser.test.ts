@@ -69,7 +69,11 @@ describe('section schema parser against the real Dawn theme', () => {
   });
 
   it('reads color schemes from settings_data.json despite the comment header', () => {
-    expect(cat.color_schemes).toContain('scheme-1');
+    expect(cat.color_schemes.map((c) => c.id)).toContain('scheme-1');
+    const s1 = cat.color_schemes.find((c) => c.id === 'scheme-1')!;
+    expect(s1.background).toBe('#FFFFFF');
+    expect(s1.text).toBe('#121212');
+    expect(s1.text_is_light).toBe(false);
     expect(cat.skipped.find((s) => s.file === 'config/settings_data.json')).toBeUndefined();
   });
 

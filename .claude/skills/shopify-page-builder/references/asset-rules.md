@@ -46,6 +46,32 @@ Other checks:
 - File size: photos > 5 MB slow the page; Shopify serves optimised versions but ask for a reasonable export if it is huge.
 - Videos: hosted upload is best ≤ 1 minute, MP4 (H.264); longer → YouTube/Vimeo via `video_url` where the section supports it. Autoplay/loop is a section setting (`enable_video_looping`), not an asset property.
 
+## Text over images: contrast
+
+Applies whenever text renders on top of an image: **Image banner**, **Slideshow** (each slide),
+**Email signup banner** (background image). Not needed for Image-with-text, Multicolumn, Collage
+(text sits beside/below the image there).
+
+1. Call `analyze_image_contrast` with the image's `shopify://` reference (or its URL before upload).
+   `upload_file_from_url` already includes the same `contrast` analysis for images.
+2. Apply the result in the template:
+   - `analysis.text: "light"` → set the section's `color_scheme` to a scheme with `text_is_light: true`
+     (the tool lists matching scheme ids); `"dark"` → a scheme with dark text.
+   - `suggested.overlay_opacity` → the section's `image_overlay_opacity` setting (0 = none). The
+     overlay darkens the image, so it only helps **light** text.
+   - `suggested.show_text_box: true` → set `show_text_box: true` (Image banner) so text sits in a
+     solid box; use it for busy images where no overlay level reads cleanly. Slideshow's equivalent
+     is `show_text_below` on mobile plus a stronger overlay on desktop.
+3. Slideshow: analyse **every** slide image; if slides disagree (one dark, one light), prefer per-slide
+   consistent treatment: overlay ~30–40 with light text on all slides usually works best.
+4. Re-check after swapping an image during iteration — a new photo can flip the recommendation.
+5. Tell the customer in plain words: "your photo is quite light, so I used dark text" /
+   "the photo is busy, so I put the text in a box". If they override you, do what they ask and note
+   the readability risk once.
+
+Rules of thumb the tool encodes: perceptual lightness ≤0.45 → light text; ≥0.75 and calm → dark text;
+in between or busy → light text + 30–40% overlay, or a text box.
+
 ## Talking about assets
 Say "image" and "video", not "asset" or "media". Confirm choices in the outline:
 "Banner: your photo *summer-hero.jpg* (2400×1200, good fit). Benefit icons: the three icons already in

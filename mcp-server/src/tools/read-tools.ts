@@ -2,7 +2,7 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import type { AppContext } from '../context.js';
 import { run } from './helpers.js';
-import { ToolError } from '../util.js';
+import { ToolError, parseJsonLoose } from '../util.js';
 import { validateTemplate } from '../validation/template-validator.js';
 import { adminPageUrl, livePageUrl, stagingEditorUrl, stagingPreviewUrl } from './urls.js';
 import { missingScopes } from '../shopify/scopes.js';
@@ -102,7 +102,7 @@ export function registerReadTools(server: McpServer, ctx: AppContext): void {
     if (content === null) return { exists: false, filename, theme, message: `${filename} does not exist on the ${theme} theme.` };
     const cat = await ctx.catalog.get();
     const v = validateTemplate(content, cat, { filename });
-    let parsed: unknown = null; try { parsed = JSON.parse(content); } catch { /* keep raw */ }
+    let parsed: unknown = null; try { parsed = parseJsonLoose(content); } catch { /* keep raw */ }
     return { exists: true, filename, theme, template: parsed ?? content, outline: v.summary.sections, validation: { ok: v.ok, errors: v.errors, warnings: v.warnings } };
   }));
 

@@ -1,6 +1,6 @@
 import type { Logger } from '../logger.js';
 import { silentLogger } from '../logger.js';
-import { ToolError, pollUntil, sleep as defaultSleep, type Sleep } from '../util.js';
+import { ToolError, parseJsonLoose, pollUntil, sleep as defaultSleep, type Sleep } from '../util.js';
 import type { GitHubClient, FileChange } from './client.js';
 import type { StagingResetStrategy } from '../config.js';
 
@@ -46,7 +46,9 @@ export interface RollbackResult {
 export function sameContent(a: string | null, b: string | null): boolean {
   if (a === null || b === null) return a === b;
   if (a === b) return true;
-  try { return JSON.stringify(JSON.parse(a)) === JSON.stringify(JSON.parse(b)); } catch { return a.trim() === b.trim(); }
+  // parseJsonLoose: Shopify prepends /* auto-generated */ headers when it writes
+  // theme files; two copies that differ only by that header (or whitespace) are the same.
+  try { return JSON.stringify(parseJsonLoose(a)) === JSON.stringify(parseJsonLoose(b)); } catch { return a.trim() === b.trim(); }
 }
 
 function assertTemplatePath(filename: string): void {

@@ -53,6 +53,14 @@ Videos: if the section has a `video_url` slot, a YouTube/Vimeo link is enough. I
 Warn when an asset is a poor fit for its slot (portrait image in a full-width banner, tiny image for a
 hero, logo-sized image as a background) — see `asset-rules.md` for the numbers.
 
+**Text over an image → check contrast.** Whenever a section will render text on top of an image
+(image-banner, slideshow slides, email-signup-banner background), run `analyze_image_contrast` on that
+image (uploads of images return the same analysis automatically). Follow its recommendation when
+generating the template: pick a `color_scheme` whose text colour matches (`text_is_light` in the
+result), set `image_overlay_opacity` as suggested, and use `show_text_box: true` for busy images.
+Mention the choice in the outline in plain words ("dark photo, so the headline will be white").
+See `asset-rules.md` → "Text over images".
+
 ### 4. Propose (plain language, no JSON)
 Present a numbered outline, top to bottom. For each section: its human name (from the catalog), what
 goes in it (headings, text, buttons + where they link, which asset fills which slot, how many columns /

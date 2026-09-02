@@ -1,4 +1,5 @@
 import type { Catalog } from '../catalog/catalog.js';
+import { parseJsonLoose } from '../util.js';
 import type { SectionEntry, SettingDef } from '../catalog/schema-parser.js';
 import { ID_RE, MAX_BLOCKS_PER_SECTION, MAX_SECTIONS_PER_TEMPLATE, SUFFIX_RE, WRITABLE_TEMPLATE_TYPES } from './limits.js';
 
@@ -105,7 +106,7 @@ function checkSettingValue(def: SettingDef, value: unknown, path: string, catalo
       return;
     case 'color_scheme':
       if (typeof value !== 'string') return typeErr('a color scheme id');
-      if (catalog.color_schemes.length && !catalog.color_schemes.includes(value)) warnings.push({ path, message: `Color scheme "${value}" is not one of the theme's schemes (${catalog.color_schemes.join(', ')}).` });
+      if (catalog.color_schemes.length && !catalog.color_schemes.some((cs) => cs.id === value)) warnings.push({ path, message: `Color scheme "${value}" is not one of the theme's schemes (${catalog.color_schemes.map((cs) => cs.id).join(', ')}).` });
       return;
     case 'color':
       if (typeof value !== 'string' || !/^(#[0-9a-f]{3,8}|rgba?\(.*\)|transparent)$/i.test(value)) warnings.push({ path, message: `"${def.id}" should be a hex color like #ffffff.` });
@@ -155,7 +156,8 @@ export function validateTemplate(input: unknown, catalog: Catalog, opts: { filen
 
   let tpl: unknown = input;
   if (typeof input === 'string') {
-    try { tpl = JSON.parse(input); } catch (e) { errors.push({ path: '$', message: `The template is not valid JSON: ${(e as Error).message}` }); return { ok: false, errors, warnings, template: null, summary }; }
+    // Shopify prepends /* auto-generated */ comment headers to files it writes; strip them.
+    try { tpl = parseJsonLoose(input); } catch (e) { errors.push({ path: '$', message: `The template is not valid JSON: ${(e as Error).message}` }); return { ok: false, errors, warnings, template: null, summary }; }
   }
   if (!isPlainObject(tpl)) { errors.push({ path: '$', message: 'The template must be a JSON object.' }); return { ok: false, errors, warnings, template: null, summary }; }
 
