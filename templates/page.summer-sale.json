@@ -1,0 +1,143 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Summer Sale — up to 30% off",
+            "heading_size": "hxl"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "Limited time only. Warm-weather favorites at their best price.",
+            "text_style": "body"
+          }
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop now",
+            "button_link_1": "shopify://collections/sale",
+            "button_style_secondary_1": false,
+            "button_label_2": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text",
+        "buttons"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/hero-image.jpg",
+        "image_overlay_opacity": 30,
+        "image_height": "large",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-4"
+      }
+    },
+    "benefits": {
+      "type": "multicolumn",
+      "blocks": {
+        "c1": {
+          "type": "column",
+          "settings": {
+            "title": "Free shipping",
+            "text": "<p>On all orders over $50.</p>"
+          }
+        },
+        "c2": {
+          "type": "column",
+          "settings": {
+            "title": "Easy returns",
+            "text": "<p>30 days, no questions asked.</p>"
+          }
+        },
+        "c3": {
+          "type": "column",
+          "settings": {
+            "title": "Secure checkout",
+            "text": "<p>Your payment details, always protected.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "title": "",
+        "image_width": "third",
+        "image_ratio": "circle",
+        "columns_desktop": 3,
+        "column_alignment": "center",
+        "background_style": "none",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "sale_products": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "sale",
+        "products_to_show": 8,
+        "title": "On sale now",
+        "heading_size": "h1",
+        "columns_desktop": 4,
+        "show_view_all": true,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "Don't miss the next drop"
+          }
+        },
+        "p": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Sign up for early access to sales and new arrivals.</p>"
+          }
+        },
+        "f": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "h",
+        "p",
+        "f"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "full_width": true
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "benefits",
+    "sale_products",
+    "newsletter"
+  ]
+}
