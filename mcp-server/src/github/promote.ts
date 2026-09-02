@@ -147,7 +147,8 @@ export class Promoter {
       return { status: 'nothing_to_promote', files, live_verified: true, unverified_files: [], note: 'The live site already has this exact content.' };
     }
 
-    const branch = `page-builder/promote-${this.now()}`;
+    // Flat name on purpose: `x/y` branch names collide with any existing branch named `x`.
+    const branch = `pb-promote-${this.now()}`;
     const message = `${PROMOTE_PREFIX} ${changes.map((c) => c.path.replace(/^templates\//, '')).join(', ')}`;
     const commitSha = await gh.createCommit(mainSha, changes, message);
     await gh.createBranch(branch, commitSha);
@@ -230,7 +231,7 @@ export class Promoter {
       files.push({ filename: f.filename, action: before === null ? 'deleted' : 'restored' });
       expected.set(f.filename, before);
     }
-    const branch = `page-builder/rollback-${this.now()}`;
+    const branch = `pb-rollback-${this.now()}`;
     const message = `${ROLLBACK_PREFIX} of ${mergeSha.slice(0, 7)}`;
     const commitSha = await gh.createCommit(mainSha, changes, message);
     await gh.createBranch(branch, commitSha);

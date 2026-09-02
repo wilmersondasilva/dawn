@@ -28,6 +28,15 @@ function setup(opts: { live?: Record<string, string>; staging?: Record<string, s
 }
 
 describe('Promoter.promote — scoped promotion', () => {
+  it('creates temp branches that cannot collide with a real branch named like their prefix', async () => {
+    // Regression: `page-builder/promote-x` was blocked by an existing `page-builder` branch (422 Reference update failed).
+    const { gh, promoter } = setup({ staging: { [TPL]: draft } });
+    gh.branches.set('page-builder', gh.branches.get('main')!); // the branch that broke it in production
+    const r = await promoter.promote([TPL]);
+    expect(r.status).toBe('promoted');
+    expect(gh.calls.filter((c) => c.startsWith('createBranch:')).every((c) => /createBranch:pb-(promote|rollback)-\d+$/.test(c))).toBe(true);
+  });
+
   it('opens and merges a PR that contains only the approved file, then verifies live', async () => {
     const { gh, promoter, stagingTheme } = setup({ staging: { [TPL]: draft } });
     // Drift on staging that must NOT be promoted: settings_data + another abandoned draft.
@@ -49,7 +58,7 @@ describe('Promoter.promote — scoped promotion', () => {
     expect(mainTree.has('templates/page.abandoned.json')).toBe(false);
     const commitCall = gh.calls.find((c) => c.startsWith('createCommit:'));
     expect(commitCall).toBe(`createCommit:${TPL}`);
-    expect([...gh.branches.keys()].some((b) => b.startsWith('page-builder/'))).toBe(false); // temp branch cleaned up
+    expect([...gh.branches.keys()].some((b) => b.startsWith('pb-promote-') || b.startsWith('pb-rollback-'))).toBe(false); // temp branch cleaned up
     const merge = await gh.getCommit(r.merge_commit_sha!);
     expect(merge.message).toMatch(/^\[page-builder\] promote page\.sale\.json/);
     // Staging still holds real drift (settings tweak + abandoned draft) → cleanup must NOT touch it.
