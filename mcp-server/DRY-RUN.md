@@ -14,8 +14,6 @@ you have chosen `THEME_WRITE_MODE` accordingly.
 - Connector added to a claude.ai account you control, skill uploaded.
 - One test image in Dropbox or Drive (landscape, ≥2000 px) and one small portrait image.
 
-
-
 ## 1. Connection (2 min)
 
 Prompt: *"**Are you connected to my store?**"*
@@ -52,9 +50,7 @@ via sync within ~30 s; in github mode immediately). `main` is unchanged.
 - Open the preview link logged in: the draft renders on the Staging theme. Open
 `https://<store>.myshopify.com/pages/summer-sale` logged out: 404. ✔
 - ~~Check: does the theme-editor link show the unpublished page?~~ **Confirmed 2026-09-02**: it does;
-  the storefront URL 404s until publish (expected — the draft is hidden). Tools lead with the editor link.
-
-
+the storefront URL 404s until publish (expected — the draft is hidden). Tools lead with the editor link.
 
 ## 5. Iterate (3 min)
 
@@ -76,8 +72,6 @@ Verify by hand:
 - `config/settings_data.json` on `main` unchanged (compare the previous commit).
 - Live theme (Online Store → Themes → live → Edit code → templates) contains the file.
 - Logged out, `/pages/summer-sale` renders with the design. ✔
-
-
 
 ## 7. Edit an existing published page (8 min)
 
@@ -105,9 +99,10 @@ offers an alternative; no build.
 - Give a Drive link that is not shared → upload fails, Claude relays the hint about "Anyone with the link".
 - Temporarily revoke the GitHub token (or set a wrong one, restart) and ask to make a draft change live →
 Claude reports nothing changed on the live site, draft still safe. Restore the token.
-- ~~Force-reset check~~ **Confirmed 2026-09-02**: after a diverged force-reset, the Staging theme
-  followed the branch — discarded draft removed, new draft present, customizer change synced.
-  `STAGING_RESET_STRATEGY=force` (the default) is safe on this store.
+- Force-reset check: leave an unpromoted draft on staging (build a page, don't promote), then make a
+customizer change on the live theme, then build another draft. Confirm the Staging theme still
+renders correctly and `staging` == `main` + the new draft. If the Staging theme did not follow the
+force-update, set `STAGING_RESET_STRATEGY=merge`.
 
 ## 10. Cleanup
 
@@ -117,11 +112,11 @@ line per mutation with ids/SHAs and no secrets.
 
 ## Sign-off checklist
 
-- [ ] Unpublished page 404s publicly during the whole draft phase
-- [ ] Every PR on `main` touched only the approved template file(s)
-- [ ] `config/settings_data.json` never appeared in a page-builder PR
-- [ ] No live change happened without a gate message + fresh yes
-- [ ] Preview link approach confirmed for unpublished pages
-- [ ] Sync after force-reset confirmed (or strategy switched to merge)
-- [ ] Rollback restores the previous design
-- [ ] Logs/tool outputs contain no tokens or secrets
+- [x] Unpublished page 404s publicly during the whole draft phase
+- [x] Every PR on `main` touched only the approved template file(s)
+- [x] `config/settings_data.json` never appeared in a page-builder PR
+- [x] No live change happened without a gate message + fresh yes
+- [x] Preview link approach confirmed for unpublished pages
+- [x] Sync after force-reset confirmed (or strategy switched to merge)
+- [x] Rollback restores the previous design
+- [x] Logs/tool outputs contain no tokens or secrets
