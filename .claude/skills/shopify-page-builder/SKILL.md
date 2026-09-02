@@ -6,10 +6,8 @@ description: >
   make a new page for a campaign/event/product launch, change or update an existing page (about page,
   FAQ, contact, homepage), add/remove/reorder a section on a page, change the homepage sections, swap an
   image/video/text on a page, or preview / publish / undo such changes — even if they never say "Shopify",
-  "template" or "section". Also trigger on Portuguese requests: criar uma página, montar uma landing page,
-  adicionar uma página na loja, alterar/atualizar a página sobre, mudar a seção da página inicial,
-  adicionar uma seção, publicar a página, colocar no ar, desfazer. Requires the "Shopify Page Builder"
-  connector tools (get_section_catalog, upsert_template_staging, create_page, promote_to_live, …).
+  "template" or "section". Requires the "Shopify Page Builder" connector tools (get_section_catalog,
+  upsert_template_staging, create_page, promote_to_live, …).
 ---
 
 # Shopify Page Builder
@@ -89,8 +87,7 @@ Apply tweaks by editing the same template and calling `upsert_template_staging` 
 preview link. Keep a short running summary of what changed each round.
 
 ### 7. Go-live gate (separate turn, fresh approval)
-Only when the customer clearly asks to publish / make it live / put it on the site (or the Portuguese
-equivalents *publicar / colocar no ar*):
+Only when the customer clearly asks to publish / make it live / put it on the site:
 1. Say **exactly** what will change, following `approval-flows.md` — e.g. "I will (1) put the new page
    design on your live theme and (2) publish the *Summer Sale* page at /pages/summer-sale. Visitors will
    see it immediately. Go ahead?"

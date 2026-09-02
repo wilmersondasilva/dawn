@@ -60,8 +60,8 @@ message must say "this changes your **homepage** for every visitor".
   without the page). Offer both when relevant.
 
 ## What counts as a go-live approval
-Accept: "yes", "go ahead", "publish it", "make it live", "put it on the site", "sim", "pode publicar",
-"coloca no ar" — **as a reply to the gate message**. Do not accept: "looks great", "perfect", "ok next",
+Accept: "yes", "go ahead", "publish it", "make it live", "put it on the site" —
+**as a reply to the gate message**. Do not accept: "looks great", "perfect", "ok next",
 a new tweak request, or approval given before the gate message was shown.
 
 ## When something fails
