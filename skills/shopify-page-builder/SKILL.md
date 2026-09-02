@@ -71,8 +71,9 @@ Do not build until they say yes. Adjust the outline as many times as they like.
    **unpublished**. Existing page: leave it alone — its template on Staging now holds the draft.
 4. `get_preview_urls` with the page handle and hand over the link with one sentence:
    "Open this while logged into your Shopify admin — it shows the draft only to you."
-   For a new (unpublished) page, give the `theme_editor_preview` link first; for an existing page, the
-   `preview_on_staging_theme` link.
+   New (unpublished) page: give the `theme_editor_preview` link — the page's normal address shows
+   404 until it is published (expected; say so if the customer tries it: "that's the page being hidden
+   from visitors until you approve it"). Existing page: give `preview_on_staging_theme`.
 5. State the current status explicitly: "This is a draft. Nothing on your live site has changed."
 
 ### 6. Iterate

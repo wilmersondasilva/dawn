@@ -141,16 +141,27 @@ export function registerReadTools(server: McpServer, ctx: AppContext): void {
       const handle = page_handle.replace(/^\/?pages\//, '');
       const page = await ctx.pages.findByHandle(handle);
       const path = `/pages/${handle}`;
-      out.page = {
-        handle, exists: !!page, published: page?.isPublished ?? null, template_suffix: page?.templateSuffix ?? null,
-        preview_on_staging_theme: stagingPreviewUrl(ctx, path),
-        theme_editor_preview: stagingEditorUrl(ctx, path),
-        admin_page: page ? adminPageUrl(ctx, page.numericId) : null,
-        live_url: page?.isPublished ? livePageUrl(ctx, handle) : null,
-        note: page && !page.isPublished
-          ? 'This page is unpublished, so the storefront preview link may show "page not found". Use theme_editor_preview (opens the draft inside the theme editor), or the admin_page link → "Preview".'
-          : 'Published page: preview_on_staging_theme shows the DRAFT design; live_url shows what visitors currently see.',
-      };
+      if (page && !page.isPublished) {
+        // Unpublished pages 404 on the storefront (even with preview_theme_id) — by design.
+        // Confirmed on the dev store 2026-09: only the theme editor renders them.
+        out.page = {
+          handle, exists: true, published: false, template_suffix: page.templateSuffix,
+          theme_editor_preview: stagingEditorUrl(ctx, path),
+          admin_page: adminPageUrl(ctx, page.numericId),
+          note: 'Preview the draft with theme_editor_preview (requires being logged into the Shopify admin). The page\'s normal address shows "404 not found" to everyone until it is published — that is expected; it means the draft is hidden from visitors.',
+        };
+      } else {
+        out.page = {
+          handle, exists: !!page, published: page?.isPublished ?? null, template_suffix: page?.templateSuffix ?? null,
+          preview_on_staging_theme: stagingPreviewUrl(ctx, path),
+          theme_editor_preview: stagingEditorUrl(ctx, path),
+          admin_page: page ? adminPageUrl(ctx, page.numericId) : null,
+          live_url: page?.isPublished ? livePageUrl(ctx, handle) : null,
+          note: page
+            ? 'Published page: preview_on_staging_theme shows the DRAFT design (admin login required); live_url shows what visitors currently see.'
+            : 'No page with this handle exists yet.',
+        };
+      }
     }
     return out;
   }));

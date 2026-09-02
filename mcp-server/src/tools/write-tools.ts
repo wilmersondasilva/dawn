@@ -107,7 +107,7 @@ export function registerWriteTools(server: McpServer, ctx: AppContext): void {
     const page = await ctx.pages.createUnpublished({ title, handle, templateSuffix: template_suffix ?? null, body: body_html });
     return {
       status: 'created_unpublished', page: fmtPage(ctx, page),
-      preview: { theme_editor: stagingEditorUrl(ctx, `/pages/${page.handle}`), storefront_on_staging: stagingPreviewUrl(ctx, `/pages/${page.handle}`), note: 'Unpublished pages may show "not found" on the storefront preview; the theme editor link shows the draft reliably.' },
+      preview: { theme_editor: stagingEditorUrl(ctx, `/pages/${page.handle}`), note: 'Preview the draft with the theme editor link (admin login required). The page\'s public URL shows 404 until it is published — expected; the draft is hidden from visitors.' },
       next: 'Not visible to visitors. Publishing requires a separate explicit approval (publish_page), and if the template is new it must also be promoted to live first (promote_to_live).',
     };
   }));

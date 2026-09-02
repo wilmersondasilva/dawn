@@ -18,7 +18,7 @@ you have chosen `THEME_WRITE_MODE` accordingly.
 
 ## 1. Connection (2 min)
 
-Prompt: *"Are you connected to my store?"*
+Prompt: *"**Are you connected to my store?**"*
 Expect: Claude calls `get_auth_status`; reports store, live/Staging themes, no missing scopes (or
 `write_themes` missing while in github mode — acceptable), write mode. No token text anywhere.
 
@@ -51,8 +51,8 @@ via sync within ~30 s; in github mode immediately). `main` is unchanged.
 - Shopify admin → Online Store → Pages: "Summer Sale" exists, **hidden**, template `page.summer-sale`.
 - Open the preview link logged in: the draft renders on the Staging theme. Open
 `https://<store>.myshopify.com/pages/summer-sale` logged out: 404. ✔
-- **Check this specifically**: does the theme-editor link show the unpublished page? If it does not,
-note it — the fallback is the admin page's "Preview" button; tell me and we adjust `get_preview_urls`.
+- ~~Check: does the theme-editor link show the unpublished page?~~ **Confirmed 2026-09-02**: it does;
+  the storefront URL 404s until publish (expected — the draft is hidden). Tools lead with the editor link.
 
 
 

@@ -16,6 +16,8 @@ Publishing a page and changing a live page design are each their own B.
    `get_preview_urls(page_handle)`.
    Message: "Done — here's your draft: <theme_editor_preview>. Open it while logged into your Shopify
    admin. Nothing is live yet; the page is hidden from visitors until you tell me to publish it."
+   If they try the page's normal address and see 404: that is correct — unpublished pages are invisible
+   on the storefront; only the theme-editor link shows the draft.
 3. Iterate on request; re-share the preview.
 4. When they ask to publish, send the gate message and stop:
    > "Ready to go live? Here's exactly what happens: **(1)** the new page design goes onto your live
