@@ -105,12 +105,9 @@ offers an alternative; no build.
 - Give a Drive link that is not shared → upload fails, Claude relays the hint about "Anyone with the link".
 - Temporarily revoke the GitHub token (or set a wrong one, restart) and ask to make a draft change live →
 Claude reports nothing changed on the live site, draft still safe. Restore the token.
-- Force-reset check: leave an unpromoted draft on staging (build a page, don't promote), then make a
-customizer change on the live theme, then build another draft. Confirm the Staging theme still
-renders correctly and `staging` == `main` + the new draft. If the Staging theme did not follow the
-force-update, set `STAGING_RESET_STRATEGY=merge`.
-
-
+- ~~Force-reset check~~ **Confirmed 2026-09-02**: after a diverged force-reset, the Staging theme
+  followed the branch — discarded draft removed, new draft present, customizer change synced.
+  `STAGING_RESET_STRATEGY=force` (the default) is safe on this store.
 
 ## 10. Cleanup
 
