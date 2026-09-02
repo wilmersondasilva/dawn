@@ -1,0 +1,38 @@
+# Render Blueprint for the Shopify Page Builder MCP server.
+# Secrets are NOT stored here (sync: false = set them in the Render dashboard).
+# rootDir + buildFilter keep Shopify's theme-sync commits (config/, templates/, …)
+# from triggering redeploys — only changes under mcp-server/ deploy.
+services:
+  - type: web
+    name: shopify-page-builder-mcp
+    runtime: docker
+    rootDir: mcp-server
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    region: virginia
+    healthCheckPath: /healthz
+    autoDeployTrigger: commit
+    buildFilter:
+      paths:
+        - mcp-server/**
+    envVars:
+      - key: SHOPIFY_STORE
+        sync: false
+      - key: SHOPIFY_CLIENT_ID
+        sync: false
+      - key: SHOPIFY_CLIENT_SECRET
+        sync: false
+      - key: GITHUB_OWNER
+        sync: false
+      - key: GITHUB_REPO
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: MCP_PATH_SECRET
+        sync: false
+      - key: THEME_WRITE_MODE
+        value: github
+      - key: STAGING_RESET_STRATEGY
+        value: force
+      - key: SYNC_TIMEOUT_SECONDS
+        value: "120"
