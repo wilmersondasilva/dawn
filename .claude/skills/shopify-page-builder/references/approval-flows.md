@@ -66,6 +66,9 @@ a new tweak request, or approval given before the gate message was shown.
 
 ## When something fails
 Always report three things: what was done, what was not, and what visitors currently see.
+Sort the failure first (see "How you talk" in SKILL.md): customer-fixable → friendly ask;
+technical (GitHub/token/branch/access/timeout anywhere in the error) → no details, site is safe,
+"I'll flag it to your web team". Never quote raw error text, codes, repository or branch names.
 Examples:
 - Draft save rejected: "I couldn't save the draft because one of the sections doesn't accept that option;
   I'm adjusting it and trying again. Nothing on your site changed."
@@ -73,7 +76,8 @@ Examples:
   share it with 'Anyone with the link' or use Dropbox?").
 - `promote_to_live` merged but not verified: "The change was sent to your live site but I couldn't yet
   confirm it's showing. Give it a minute; I'll check again before publishing the page."
-- `promote_to_live` failed: "Nothing changed on your live site. The draft is still safe in preview.
-  <plain-language reason from hint>."
+- `promote_to_live` failed (technical): "I hit a technical problem on my side while making this live —
+  nothing on your site changed, and your draft is safe. I'll flag it to your web team and we can try
+  again after." (Do NOT explain branches, tokens, or ask them to check anything.)
 - Page published but template not verified is prevented by the server; if you ever see a published page
   with the wrong layout, `unpublish_page` immediately and explain.
