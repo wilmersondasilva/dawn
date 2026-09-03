@@ -1,0 +1,141 @@
+{
+  "order": [
+    "hero",
+    "benefits",
+    "sale_products",
+    "newsletter"
+  ],
+  "sections": {
+    "benefits": {
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "blocks": {
+        "c1": {
+          "settings": {
+            "text": "<p>On every order during the sale.</p>",
+            "title": "Free shipping over $50"
+          },
+          "type": "column"
+        },
+        "c2": {
+          "settings": {
+            "text": "<p>Changed your mind? No problem.</p>",
+            "title": "Easy 30-day returns"
+          },
+          "type": "column"
+        },
+        "c3": {
+          "settings": {
+            "text": "<p>All major cards and Shop Pay.</p>",
+            "title": "Secure checkout"
+          },
+          "type": "column"
+        }
+      },
+      "settings": {
+        "background_style": "none",
+        "button_label": "",
+        "color_scheme": "scheme-1",
+        "column_alignment": "center",
+        "columns_desktop": 3,
+        "columns_mobile": "1",
+        "heading_size": "h2",
+        "image_ratio": "circle",
+        "image_width": "third",
+        "title": "Why shop the sale"
+      },
+      "type": "multicolumn"
+    },
+    "hero": {
+      "block_order": [
+        "heading",
+        "text",
+        "buttons"
+      ],
+      "blocks": {
+        "buttons": {
+          "settings": {
+            "button_label_1": "Shop now",
+            "button_label_2": "",
+            "button_link_1": "/collections/all",
+            "button_style_secondary_1": false
+          },
+          "type": "buttons"
+        },
+        "heading": {
+          "settings": {
+            "heading": "Winter Sale: up to 30% off",
+            "heading_size": "hxl"
+          },
+          "type": "heading"
+        },
+        "text": {
+          "settings": {
+            "text": "Cold-weather gear, warm prices. Limited time only.",
+            "text_style": "body"
+          },
+          "type": "text"
+        }
+      },
+      "settings": {
+        "color_scheme": "scheme-4",
+        "desktop_content_alignment": "center",
+        "desktop_content_position": "middle-center",
+        "image": "shopify://shop_images/hero.jpg",
+        "image_height": "large",
+        "image_overlay_opacity": 40,
+        "mobile_content_alignment": "center",
+        "show_text_below": false,
+        "show_text_box": false
+      },
+      "type": "image-banner"
+    },
+    "newsletter": {
+      "block_order": [
+        "h",
+        "p",
+        "f"
+      ],
+      "blocks": {
+        "f": {
+          "type": "email_form"
+        },
+        "h": {
+          "settings": {
+            "heading": "Get first dibs on winter deals",
+            "heading_size": "h1"
+          },
+          "type": "heading"
+        },
+        "p": {
+          "settings": {
+            "text": "<p>Sign up and we'll email you before the next sale drops.</p>"
+          },
+          "type": "paragraph"
+        }
+      },
+      "settings": {
+        "color_scheme": "scheme-2",
+        "full_width": true
+      },
+      "type": "newsletter"
+    },
+    "sale_products": {
+      "settings": {
+        "collection": "all",
+        "color_scheme": "scheme-1",
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "heading_size": "h1",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "title": "On sale now",
+        "view_all_style": "solid"
+      },
+      "type": "featured-collection"
+    }
+  }
+}
